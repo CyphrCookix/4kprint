@@ -1,0 +1,27 @@
+{
+  "name": "4K Print - Conception Graphique Professionnelle et Impression",
+  "short_name": "4K Print",
+  "description": "Services professionnels de conception graphique et d'impression. Logos personnalisés, flyers, impressions grand format, conception d'emballages et vêtements personnalisés.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#1a1a2e",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "design", "productivity"],
+  "lang": "en-US",
+  "dir": "ltr"
+}
