@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4K Print - I18n Test</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="i18n.css">
+    <style>
+        body {
+            padding: 2rem;
+            font-family: Arial, sans-serif;
+        }
+
+        .test-section {
+            margin: 2rem 0;
+            padding: 1rem;
+            border: 1px solid #ddd;
+        }
+
+        .lang-info {
+            background: #f0f0f0;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        button {
+            margin: 0.5rem;
+            padding: 0.5rem 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lang-info">
+        <h2>Current Language: <span id="currentLang">Loading...</span></h2>
+        <p>Direction: <span id="currentDir">Loading...</span></p>
+        <p>Language Switchers Found: <span id="switcherCount">Checking...</span></p>
+        <div>
+            <button onclick="window.i18n?.switchLanguage('fr')">Français</button>
+            <button onclick="window.i18n?.switchLanguage('ar')">العربية</button>
+            <button onclick="window.i18n?.switchLanguage('en')">English</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h1 data-i18n="hero.title">Loading...</h1>
+        <p data-i18n="hero.subtitle">Loading...</p>
+        <button data-i18n="hero.cta_quote">Loading...</button>
+        <button data-i18n="hero.cta_portfolio">Loading...</button>
+    </div>
+
+    <div class="test-section">
+        <h2 data-i18n="about.title">Loading...</h2>
+        <p data-i18n="about.description1">Loading...</p>
+        <p data-i18n="about.description2">Loading...</p>
+        <h3 data-i18n="about.mission_title">Loading...</h3>
+        <p data-i18n="about.mission_text">Loading...</p>
+    </div>
+
+    <div class="test-section">
+        <h2 data-i18n="services.title">Loading...</h2>
+        <p data-i18n="services.subtitle">Loading...</p>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+            <div>
+                <h3 data-i18n="services.logo.title">Loading...</h3>
+                <p data-i18n="services.logo.description">Loading...</p>
+            </div>
+            <div>
+                <h3 data-i18n="services.large_format.title">Loading...</h3>
+                <p data-i18n="services.large_format.description">Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2 data-i18n="contact.title">Loading...</h2>
+        <form>
+            <div>
+                <label data-i18n="contact.form.name">Loading...</label>
+                <input type="text" data-i18n-placeholder="contact.form.name">
+            </div>
+            <div>
+                <label data-i18n="contact.form.email">Loading...</label>
+                <input type="email" data-i18n-placeholder="contact.form.email">
+            </div>
+            <div>
+                <label data-i18n="contact.form.message">Loading...</label>
+                <textarea data-i18n-placeholder="contact.form.message_placeholder"></textarea>
+            </div>
+            <button type="submit" data-i18n="contact.form.submit">Loading...</button>
+        </form>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script src="verify-i18n.js"></script>
+    <script>
+        // Update language info when language changes
+        document.addEventListener('languageChanged', function (e) {
+            document.getElementById('currentLang').textContent = e.detail.language;
+            document.getElementById('currentDir').textContent = e.detail.isRTL ? 'RTL' : 'LTR';
+            updateSwitcherCount();
+        });
+
+        function updateSwitcherCount() {
+            const switchers = document.querySelectorAll('.language-switcher, .language-selector');
+            document.getElementById('switcherCount').textContent = switchers.length;
+
+            if (switchers.length > 1) {
+                document.getElementById('switcherCount').style.color = 'red';
+                document.getElementById('switcherCount').textContent += ' (ERROR: Multiple switchers found!)';
+            } else if (switchers.length === 1) {
+                document.getElementById('switcherCount').style.color = 'green';
+                document.getElementById('switcherCount').textContent += ' (OK)';
+            } else {
+                document.getElementById('switcherCount').style.color = 'orange';
+                document.getElementById('switcherCount').textContent += ' (No switcher found)';
+            }
+        }
+
+        // Initial update
+        setTimeout(() => {
+            if (window.i18n) {
+                document.getElementById('currentLang').textContent = window.i18n.getCurrentLanguage();
+                document.getElementById('currentDir').textContent = window.i18n.isRTLLanguage() ? 'RTL' : 'LTR';
+            }
+            updateSwitcherCount();
+        }, 100);
+    </script>
+</body>
+
+</html>

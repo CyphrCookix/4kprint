@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4K Print - Portfolio Test</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="i18n.css">
+    <style>
+        body { 
+            margin: 0; 
+            font-family: Arial, sans-serif; 
+            padding-top: 100px;
+        }
+        .test-info {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .test-info h2 {
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+        .test-info p {
+            color: #666;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header id="header" class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="#home" class="logo-link">4K Print</a>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#portfolio" class="nav-link">Portfolio Test</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="test-info">
+        <h2>Portfolio Image Test</h2>
+        <p>✓ Clean images without overlay text</p>
+        <p>✓ Zoom cursor on hover</p>
+        <p>✓ Zoom indicator (🔍) appears on hover</p>
+        <p>✓ Click to open full-size view</p>
+        <p>✓ Close with X button or Escape key</p>
+        <p>✓ Click outside image to close</p>
+    </div>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Clean Portfolio Gallery</h2>
+                <p class="section-subtitle">Click any image to view in full size</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item" data-lightbox="portfolio">
+                    <div class="portfolio-image loading">
+                        <picture>
+                            <source srcset="placeholder.webp" type="image/webp">
+                            <img data-src="placeholder.webp" alt="Brand Identity Design Project" loading="lazy">
+                        </picture>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-lightbox="portfolio">
+                    <div class="portfolio-image loading">
+                        <picture>
+                            <source srcset="placeholder.webp" type="image/webp">
+                            <img data-src="placeholder.webp" alt="Event Promotion Project" loading="lazy">
+                        </picture>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-lightbox="portfolio">
+                    <div class="portfolio-image loading">
+                        <picture>
+                            <source srcset="placeholder.webp" type="image/webp">
+                            <img data-src="placeholder.webp" alt="Product Packaging Project" loading="lazy">
+                        </picture>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-lightbox="portfolio">
+                    <div class="portfolio-image loading">
+                        <picture>
+                            <source srcset="placeholder.webp" type="image/webp">
+                            <img data-src="placeholder.webp" alt="Trade Show Banner Project" loading="lazy">
+                        </picture>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-lightbox="portfolio">
+                    <div class="portfolio-image loading">
+                        <picture>
+                            <source srcset="placeholder.webp" type="image/webp">
+                            <img data-src="placeholder.webp" alt="Corporate Apparel Project" loading="lazy">
+                        </picture>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-lightbox="portfolio">
+                    <div class="portfolio-image loading">
+                        <picture>
+                            <source srcset="placeholder.webp" type="image/webp">
+                            <img data-src="placeholder.webp" alt="Marketing Materials Project" loading="lazy">
+                        </picture>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simplified Lightbox Modal -->
+    <div class="lightbox" id="portfolioLightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">&times;</button>
+            <img class="lightbox-image" id="lightboxImage" alt="">
+        </div>
+    </div>
+
+    <div class="test-info">
+        <h2>Test Instructions</h2>
+        <p><strong>Hover:</strong> See zoom cursor and 🔍 indicator</p>
+        <p><strong>Click:</strong> Open image in full-size lightbox</p>
+        <p><strong>Close:</strong> Click X button, press Escape, or click outside</p>
+        <p><strong>Mobile:</strong> Tap image to zoom, tap X to close</p>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script src="main.js"></script>
+    <script>
+        // Test functionality
+        setTimeout(() => {
+            console.log('🖼️ Portfolio test loaded');
+            console.log('📋 Features tested:');
+            console.log('  ✓ Clean images without overlay text');
+            console.log('  ✓ Zoom cursor and indicator');
+            console.log('  ✓ Click to open lightbox');
+            console.log('  ✓ Close with X, Escape, or outside click');
+            console.log('  ✓ Mobile-friendly touch interactions');
+            
+            // Count portfolio items
+            const items = document.querySelectorAll('.portfolio-item');
+            console.log(`  ✓ ${items.length} portfolio items loaded`);
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Validation Test - 4K Print</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1a1a2e;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .test-button {
+            background: #1a1a2e;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        .test-button:hover {
+            background: #2a2a3e;
+        }
+        .results-area {
+            background: #000;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-top: 20px;
+        }
+        .language-test {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 16px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .language-test:hover {
+            background: #d0d0d0;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-passed { background: #4CAF50; }
+        .status-failed { background: #f44336; }
+        .status-warning { background: #ff9800; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>🔍 4K Print Content Validation Suite</h1>
+            <p>Comprehensive testing for content consistency across all languages</p>
+        </div>
+
+        <div class="test-section">
+            <h3>🌐 Language Switching Test</h3>
+            <p>Test language switching functionality with updated content:</p>
+            <div class="language-test" onclick="testLanguage('fr')">🇫🇷 French</div>
+            <div class="language-test" onclick="testLanguage('ar')">🇲🇦 Arabic</div>
+            <div class="language-test" onclick="testLanguage('en')">🇺🇸 English</div>
+        </div>
+
+        <div class="test-section">
+            <h3>📋 Content Consistency Test</h3>
+            <p>Verify business information consistency across all language versions:</p>
+            <button class="test-button" onclick="testContentConsistency()">Test Content Consistency</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📞 Contact Form Test</h3>
+            <p>Test contact form functionality with updated contact information:</p>
+            <button class="test-button" onclick="testContactForm()">Test Contact Form</button>
+        </div>
+
+        <div class="test-section">
+            <h3>🗺️ Map Embed Test</h3>
+            <p>Verify map embed displays correct business location:</p>
+            <button class="test-button" onclick="testMapEmbed()">Test Map Embed</button>
+        </div>
+
+        <div class="test-section">
+            <h3>🚀 Run All Tests</h3>
+            <p>Execute comprehensive validation suite:</p>
+            <button class="test-button" onclick="runAllTests()" style="background: #4CAF50;">Run Complete Validation</button>
+            <button class="test-button" onclick="clearResults()">Clear Results</button>
+        </div>
+
+        <div class="results-area" id="resultsArea">
+Ready to run tests... Click any test button above to begin.
+
+Available Tests:
+- Language Switching: Tests French, Arabic, and English language switching
+- Content Consistency: Verifies business information across all languages  
+- Contact Form: Tests form functionality and field validation
+- Map Embed: Validates Google Maps embed with correct location
+- Complete Validation: Runs all tests in sequence
+
+Console output will appear here...
+        </div>
+    </div>
+
+    <!-- Load the main website's scripts -->
+    <script src="i18n.js"></script>
+    <script src="main.js"></script>
+    <script src="validate-content-consistency.js"></script>
+
+    <script>
+        const resultsArea = document.getElementById('resultsArea');
+        
+        // Override console.log to display in results area
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const message = args.join(' ') + '\n';
+            resultsArea.textContent += message;
+            resultsArea.scrollTop = resultsArea.scrollHeight;
+        };
+
+        // Test functions
+        async function testLanguage(lang) {
+            console.log(`🌐 Testing ${lang.toUpperCase()} language switching...`);
+            
+            if (window.i18nManager) {
+                try {
+                    window.i18nManager.switchLanguage(lang);
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
+                    const currentLang = window.i18nManager.currentLanguage;
+                    if (currentLang === lang) {
+                        console.log(`✅ Successfully switched to ${lang}`);
+                        
+                        // Test a few key elements
+                        const testElements = [
+                            { selector: '[data-i18n="nav.home"]', key: 'nav.home' },
+                            { selector: '[data-i18n="hero.title"]', key: 'hero.title' }
+                        ];
+                        
+                        for (const test of testElements) {
+                            const element = document.querySelector(test.selector);
+                            if (element && element.textContent.trim()) {
+                                console.log(`✅ ${test.key} translated in ${lang}: "${element.textContent.trim()}"`);
+                            } else {
+                                console.log(`❌ ${test.key} not found or not translated in ${lang}`);
+                            }
+                        }
+                    } else {
+                        console.log(`❌ Failed to switch to ${lang}`);
+                    }
+                } catch (error) {
+                    console.log(`❌ Error switching to ${lang}: ${error.message}`);
+                }
+            } else {
+                console.log('❌ i18n system not loaded');
+            }
+        }
+
+        async function testContentConsistency() {
+            console.log('📋 Testing content consistency...');
+            
+            // Test business name consistency
+            const businessNameElements = [
+                'title',
+                '.hero-title',
+                '.footer-logo .logo-link'
+            ];
+            
+            for (const selector of businessNameElements) {
+                const element = document.querySelector(selector);
+                if (element) {
+                    const content = element.textContent || element.getAttribute('content') || element.innerHTML;
+                    if (content.includes('4K Print') || content.includes('Print & Pub')) {
+                        console.log(`✅ Business name consistent in: ${selector}`);
+                    } else {
+                        console.log(`❌ Business name inconsistent in: ${selector}`);
+                    }
+                } else {
+                    console.log(`⚠️ Element not found: ${selector}`);
+                }
+            }
+            
+            console.log('📋 Content consistency test completed');
+        }
+
+        async function testContactForm() {
+            console.log('📞 Testing contact form...');
+            
+            const form = document.getElementById('contactForm');
+            if (form) {
+                console.log('✅ Contact form found');
+                
+                const fields = ['name', 'email', 'message'];
+                for (const fieldId of fields) {
+                    const field = document.getElementById(fieldId);
+                    if (field) {
+                        console.log(`✅ ${fieldId} field found`);
+                        if (field.hasAttribute('required')) {
+                            console.log(`✅ ${fieldId} field is required`);
+                        }
+                    } else {
+                        console.log(`❌ ${fieldId} field not found`);
+                    }
+                }
+            } else {
+                console.log('❌ Contact form not found');
+            }
+            
+            console.log('📞 Contact form test completed');
+        }
+
+        async function testMapEmbed() {
+            console.log('🗺️ Testing map embed...');
+            
+            const mapIframe = document.querySelector('iframe[src*="google.com/maps"]');
+            if (mapIframe) {
+                console.log('✅ Map iframe found');
+                
+                const src = mapIframe.getAttribute('src');
+                if (src.includes('google.com/maps/embed')) {
+                    console.log('✅ Valid Google Maps embed URL');
+                    
+                    if (src.includes('33.53') && src.includes('-7.72')) {
+                        console.log('✅ Map coordinates match Casablanca location');
+                    } else {
+                        console.log('⚠️ Map coordinates may not match expected location');
+                    }
+                } else {
+                    console.log('❌ Invalid map embed URL');
+                }
+            } else {
+                console.log('❌ Map iframe not found');
+            }
+            
+            console.log('🗺️ Map embed test completed');
+        }
+
+        async function runAllTests() {
+            console.log('🚀 Starting comprehensive validation suite...\n');
+            
+            if (window.ContentValidator) {
+                const validator = new window.ContentValidator();
+                await validator.validateAll();
+            } else {
+                console.log('❌ ContentValidator not loaded, running basic tests...');
+                
+                await testLanguage('fr');
+                await testLanguage('ar');
+                await testLanguage('en');
+                await testContentConsistency();
+                await testContactForm();
+                await testMapEmbed();
+            }
+            
+            console.log('\n🏁 All tests completed!');
+        }
+
+        function clearResults() {
+            resultsArea.textContent = 'Results cleared. Ready for new tests...\n';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🔍 Content Validation Suite Ready');
+            console.log('Click any test button to begin validation...\n');
+        });
+    </script>
+</body>
+</html>

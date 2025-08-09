@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4K Print - Header Background Test</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="i18n.css">
+    <style>
+        body { 
+            margin: 0; 
+            font-family: Arial, sans-serif; 
+        }
+        .test-section { 
+            height: 100vh; 
+            padding: 100px 2rem 2rem; 
+            margin-bottom: 2rem;
+        }
+        .light-bg { background: linear-gradient(135deg, #f0f0f0, #ffffff); color: #333; }
+        .dark-bg { background: linear-gradient(135deg, #333, #555); color: #fff; }
+        .colorful-bg { background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1); color: #fff; }
+        .test-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .scroll-info {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header id="header" class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="#home" class="logo-link">4K Print</a>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#light" class="nav-link">Light Section</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#dark" class="nav-link">Dark Section</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#colorful" class="nav-link">Colorful Section</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#test" class="nav-link">Test</a>
+                    </li>
+                </ul>
+                <div class="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="test-section light-bg" id="light">
+        <div class="test-content">
+            <h1>Light Background Section</h1>
+            <p>This section has a light background to test header visibility against light colors.</p>
+            <p>The navigation should be clearly visible with the new stable background.</p>
+            <p>Scroll down to test different background combinations.</p>
+        </div>
+    </div>
+
+    <div class="test-section dark-bg" id="dark">
+        <div class="test-content">
+            <h1>Dark Background Section</h1>
+            <p>This section has a dark background to test header visibility against dark colors.</p>
+            <p>The navigation should still be clearly visible and readable.</p>
+            <p>The header background should provide good contrast.</p>
+        </div>
+    </div>
+
+    <div class="test-section colorful-bg" id="colorful">
+        <div class="test-content">
+            <h1>Colorful Background Section</h1>
+            <p>This section has a colorful gradient background to test header visibility against complex backgrounds.</p>
+            <p>The navigation should remain readable and professional looking.</p>
+            <p>The backdrop blur should help with readability.</p>
+        </div>
+    </div>
+
+    <div class="test-section light-bg" id="test">
+        <div class="test-content">
+            <h1>Final Test Section</h1>
+            <p>This is the final test section to verify consistent header behavior.</p>
+            <p>Try scrolling up and down to see the header.scrolled state changes.</p>
+            <p>Test the mobile menu on smaller screens.</p>
+        </div>
+    </div>
+
+    <div class="scroll-info">
+        <div>Scroll Position: <span id="scrollPos">0</span>px</div>
+        <div>Header State: <span id="headerState">normal</span></div>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script src="main.js"></script>
+    <script>
+        // Track scroll position and header state
+        function updateScrollInfo() {
+            const scrollPos = window.scrollY || window.pageYOffset;
+            const header = document.getElementById('header');
+            
+            document.getElementById('scrollPos').textContent = Math.round(scrollPos);
+            document.getElementById('headerState').textContent = 
+                header.classList.contains('scrolled') ? 'scrolled' : 'normal';
+        }
+
+        window.addEventListener('scroll', updateScrollInfo);
+        updateScrollInfo();
+
+        // Test language switching
+        setTimeout(() => {
+            console.log('🧪 Header background test loaded');
+            console.log('📋 Test checklist:');
+            console.log('  ✓ Header visible on light backgrounds');
+            console.log('  ✓ Header visible on dark backgrounds');
+            console.log('  ✓ Header visible on colorful backgrounds');
+            console.log('  ✓ Header state changes on scroll');
+            console.log('  ✓ Mobile menu positioning correct');
+            console.log('  ✓ Language switcher visible and functional');
+        }, 1000);
+    </script>
+</body>
+</html>

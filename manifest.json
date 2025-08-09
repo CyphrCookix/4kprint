@@ -1,0 +1,35 @@
+{
+  "name": "4K Print - Print & Pub | Advertising Panels & Digital Printing Services",
+  "short_name": "4K Print",
+  "description": "Company specializing in the manufacture of advertising panels and digital printing. We help creative creators bring their ideas to reality and business owners enhance their advertising. Located in Errahma - Casablanca, Morocco.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#1a1a2e",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "business",
+    "design",
+    "productivity",
+    "advertising",
+    "printing"
+  ],
+  "lang": "ar-MA",
+  "dir": "ltr",
+  "scope": "/",
+  "id": "4kprint-app"
+}
