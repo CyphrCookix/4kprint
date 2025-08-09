@@ -672,15 +672,41 @@ document.addEventListener('DOMContentLoaded', function () {
     // Enhanced Lazy Loading Implementation with WebP Support and Error Handling
     const portfolioImages = document.querySelectorAll('.portfolio-image picture img[data-src], .portfolio-image img[data-src]');
 
-    // WebP support detection
-    function supportsWebP() {
+    // Advanced format detection - use the new system if available
+    let formatDetector = null;
+    let formatUtilities = null;
+    let webpSupported = false; // Fallback for legacy compatibility
+
+    // Initialize advanced format detection
+    async function initializeAdvancedFormats() {
+        if (window.imageFormatDetector && window.imageFormatUtilities) {
+            formatDetector = window.imageFormatDetector;
+            formatUtilities = window.imageFormatUtilities;
+            
+            // Wait for detection to complete
+            await formatDetector.initializeDetection();
+            
+            // Update legacy variable for backward compatibility
+            webpSupported = formatDetector.isFormatSupported('webp');
+            
+            console.log('Advanced format detection initialized:', formatDetector.getSupportedFormats());
+        } else {
+            // Fallback to basic WebP detection
+            webpSupported = supportsWebPBasic();
+            console.log('Using basic WebP detection:', webpSupported);
+        }
+    }
+
+    // Basic WebP detection fallback
+    function supportsWebPBasic() {
         const canvas = document.createElement('canvas');
         canvas.width = 1;
         canvas.height = 1;
         return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
     }
 
-    const webpSupported = supportsWebP();
+    // Initialize format detection
+    initializeAdvancedFormats();
 
     // Create error placeholder image
     function createErrorPlaceholder() {
@@ -752,18 +778,40 @@ document.addEventListener('DOMContentLoaded', function () {
                 testImg.src = src;
             }
 
-            // Try WebP first if supported, then fallback to original
-            if (webpSupported && originalSrc.includes('.webp')) {
-                tryLoad(originalSrc);
-            } else if (webpSupported && !originalSrc.includes('.webp')) {
-                // Try to load WebP version first
-                const webpSrc = originalSrc.replace(/\.(jpg|jpeg|png)$/i, '.webp');
-                const testWebP = new Image();
-                testWebP.onload = () => tryLoad(webpSrc);
-                testWebP.onerror = () => tryLoad(originalSrc);
-                testWebP.src = webpSrc;
+            // Use advanced format detection if available
+            if (formatDetector && formatUtilities) {
+                // Get optimal format and URL
+                const optimalFormat = formatDetector.getBestSupportedFormat(['avif', 'webp', 'jpeg', 'png']);
+                if (optimalFormat && optimalFormat !== 'jpeg' && optimalFormat !== 'png') {
+                    const optimizedUrl = formatDetector.getFormatUrl(originalSrc, optimalFormat);
+                    
+                    // Test if optimized version exists, fallback to original if not
+                    formatUtilities.testImageExists(optimizedUrl)
+                        .then(exists => {
+                            if (exists) {
+                                tryLoad(optimizedUrl);
+                            } else {
+                                tryLoad(originalSrc);
+                            }
+                        })
+                        .catch(() => tryLoad(originalSrc));
+                } else {
+                    tryLoad(originalSrc);
+                }
             } else {
-                tryLoad(originalSrc);
+                // Fallback to basic WebP detection
+                if (webpSupported && originalSrc.includes('.webp')) {
+                    tryLoad(originalSrc);
+                } else if (webpSupported && !originalSrc.includes('.webp')) {
+                    // Try to load WebP version first
+                    const webpSrc = originalSrc.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+                    const testWebP = new Image();
+                    testWebP.onload = () => tryLoad(webpSrc);
+                    testWebP.onerror = () => tryLoad(originalSrc);
+                    testWebP.src = webpSrc;
+                } else {
+                    tryLoad(originalSrc);
+                }
             }
         });
     }

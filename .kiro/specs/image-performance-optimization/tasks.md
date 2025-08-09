@@ -5,6 +5,7 @@
 
 
 
+
   - Create comprehensive browser capability detection for AVIF, WebP, and legacy formats
   - Implement format selection logic with proper fallback hierarchy (AVIF → WebP → JPEG/PNG)
   - Add runtime format switching based on browser capabilities
